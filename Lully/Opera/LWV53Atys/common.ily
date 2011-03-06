@@ -301,3 +301,23 @@ onlyNotesLayout = \layout {
   }
   \context { \Score \remove "Bar_number_engraver" }
 }
+
+%%% Figured bass
+includeFigures = 
+#(define-music-function (parser location pathname) (string?)
+  (let ((include-file (include-pathname pathname)))
+     #{ \new FiguredBass \figuremode { \include $include-file } #}))
+
+#(ly:set-option 'baussen-figures #f)
+
+ballardFigures =
+#(define-music-function (parser location figures) (ly:music?)
+   (if (eqv? (ly:get-option 'baussen-figures) #f)
+       figures
+       (make-music 'Music 'void #t)))
+
+baussenFigures =
+#(define-music-function (parser location figures) (ly:music?)
+   (if (eqv? (ly:get-option 'baussen-figures) #t)
+       figures
+       (make-music 'Music 'void #t)))
