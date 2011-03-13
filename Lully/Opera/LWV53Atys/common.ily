@@ -320,4 +320,8 @@ baussenFigures =
 #(define-music-function (parser location figures) (ly:music?)
    (if (eqv? (ly:get-option 'baussen-figures) #t)
        figures
-       (make-music 'Music 'void #t)))
+       #{ \new FiguredBass \with {
+            \override BassFigure #'color = #red
+            \override BassFigureContinuation #'color = #red
+          } $figures #}))
+%       (make-music 'Music 'void #t)))
